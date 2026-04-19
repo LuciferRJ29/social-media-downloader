@@ -8,9 +8,9 @@ import Loader from "./Loader";
 import ResultCard from "./ResultCard";
 
 type DownloadResponse = {
-  title: string;
-  thumbnail: string;
-  download: string;
+  title?: string;
+  thumbnail?: string;
+  download?: string;
   error?: string;
 };
 
