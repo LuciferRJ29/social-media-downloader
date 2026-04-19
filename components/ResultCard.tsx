@@ -10,6 +10,9 @@ type Props = {
 };
 
 export default function ResultCard({ data }: Props) {
+  // 🔍 DEBUG (remove later)
+  console.log("DOWNLOAD LINK:", data.download);
+
   // ❌ Error state
   if (data.error) {
     return (
@@ -18,6 +21,15 @@ export default function ResultCard({ data }: Props) {
       </div>
     );
   }
+
+  const handleDownload = () => {
+    if (!data.download) {
+      alert("Download link not available");
+      return;
+    }
+
+    window.open(data.download, "_blank");
+  };
 
   return (
     <div className="mt-6 p-6 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/10 shadow-lg text-center max-w-md mx-auto">
@@ -40,17 +52,13 @@ export default function ResultCard({ data }: Props) {
         </h2>
       )}
 
-      {/* Download Button */}
-      {data.download && (
-        <a
-          href={data.download}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block bg-green-500 hover:bg-green-600 px-6 py-2 rounded-xl text-white font-medium transition duration-200"
-        >
-          ⬇ Download Now
-        </a>
-      )}
+      {/* Download Button (FIXED) */}
+      <button
+        onClick={handleDownload}
+        className="inline-block bg-green-500 hover:bg-green-600 px-6 py-2 rounded-xl text-white font-medium transition duration-200"
+      >
+        ⬇ Download Now
+      </button>
     </div>
   );
 }
