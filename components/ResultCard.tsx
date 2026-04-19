@@ -1,46 +1,54 @@
+type DownloadData = {
+  title?: string;
+  thumbnail?: string;
+  download?: string;
+  error?: string;
+};
+
 type Props = {
-  data: {
-    title?: string;
-    thumbnail?: string;
-    download?: string;
-    error?: string;
-  };
+  data: DownloadData;
 };
 
 export default function ResultCard({ data }: Props) {
+  // ❌ Error state
   if (data.error) {
     return (
-      <div className="text-red-500 mt-4 text-center">
+      <div className="mt-6 text-center text-red-400 font-medium">
         {data.error}
       </div>
     );
   }
 
   return (
-    <div className="mt-6 p-6 rounded-2xl bg-white/10 backdrop-blur-xl text-center">
+    <div className="mt-6 p-6 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/10 shadow-lg text-center max-w-md mx-auto">
+      
       {/* Thumbnail */}
-      {data.thumbnail && (
+      {data.thumbnail ? (
         <img
           src={data.thumbnail}
           alt="thumbnail"
-          className="rounded-xl mb-4 mx-auto"
+          className="rounded-xl mb-4 mx-auto w-full object-cover"
         />
+      ) : (
+        <div className="mb-4 text-gray-400">No preview available</div>
       )}
 
       {/* Title */}
-      <h2 className="text-lg font-semibold mb-4">
-        {data.title}
-      </h2>
+      {data.title && (
+        <h2 className="text-lg font-semibold mb-4 text-white line-clamp-2">
+          {data.title}
+        </h2>
+      )}
 
       {/* Download Button */}
       {data.download && (
         <a
-          href={data.download}   // 🔥 IMPORTANT FIX
+          href={data.download}
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-green-500 hover:bg-green-600 px-5 py-2 rounded-xl text-white transition"
+          className="inline-block bg-green-500 hover:bg-green-600 px-6 py-2 rounded-xl text-white font-medium transition duration-200"
         >
-          Download Now
+          ⬇ Download Now
         </a>
       )}
     </div>
