@@ -44,8 +44,9 @@ export default function DownloaderBox() {
 
   return (
     <div className="w-full max-w-2xl text-center">
-
-      <div className="flex gap-2 bg-white/10 p-3 rounded-xl">
+      
+      {/* Input Box */}
+      <div className="flex gap-2 bg-white/10 p-3 rounded-xl backdrop-blur-lg">
         <Input
           value={url}
           onChange={(e) => setUrl(e.target.value)}
@@ -57,17 +58,15 @@ export default function DownloaderBox() {
         </Button>
       </div>
 
+      {/* Loader */}
       {loading && <Loader />}
 
-      {/* ✅ SAFE RENDER */}
-      {data && !data.error && data.title && data.thumbnail && data.download && (
-        <ResultCard
-          title={data.title}
-          thumbnail={data.thumbnail}
-          download={data.download}
-        />
+      {/* ✅ FIXED RESULT RENDER */}
+      {data && !data.error && (
+        <ResultCard data={data} />
       )}
 
+      {/* Error */}
       {data?.error && (
         <p className="text-red-400 mt-4">{data.error}</p>
       )}
