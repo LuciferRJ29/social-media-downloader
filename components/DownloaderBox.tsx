@@ -64,18 +64,17 @@ export default function DownloaderBox() {
       {loading && <Loader />}
 
       {/* Result */}
-      {data && !data.error && (
-        <ResultCard
-          title={data.title}
-          thumbnail={data.thumbnail}
-          download={data.download}
-        />
-      )}
+      {data && !data.error && data.title && (
+  <ResultCard
+    title={data.title}
+    thumbnail={data.thumbnail}
+    download={data.download}
+  />
+)}
 
-      {/* Error */}
-      {data?.error && (
-        <p className="mt-6 text-red-400">{data.error}</p>
-      )}
+{data?.error && (
+  <p className="text-red-400 mt-4">{data.error}</p>
+)}
 
     </div>
   );
