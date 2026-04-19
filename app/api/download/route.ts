@@ -6,6 +6,13 @@ export async function POST(req: Request) {
   try {
     const { url } = await req.json();
 
+    if (!API) {
+      return NextResponse.json(
+        { error: "API URL not set" },
+        { status: 500 }
+      );
+    }
+
     const res = await fetch(`${API}/api/download`, {
       method: "POST",
       headers: {
