@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 type InputProps = {
@@ -9,17 +11,21 @@ type InputProps = {
 export default function Input({
   value,
   onChange,
-  placeholder,
+  placeholder = "Paste video URL...",
 }: InputProps) {
   return (
     <input
-      type="text"
+      type="url" // 🔥 better for URL input
       value={value}
       onChange={onChange}
       placeholder={placeholder}
+      required
       className="
         flex-1 bg-transparent outline-none
         text-white placeholder-gray-400
+        px-2 py-1
+        focus:ring-2 focus:ring-purple-500
+        rounded-lg
       "
     />
   );
