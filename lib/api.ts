@@ -1,5 +1,5 @@
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+  process.env.NEXT_PUBLIC_API_URL || "https://smdweb-38a1de00f443.herokuapp.com";
 
 export type DownloadResponse = {
   title?: string;
