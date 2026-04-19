@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import Input from "./ui/Input";
 import Button from "./ui/Button";
 import Loader from "./Loader";
@@ -28,6 +27,9 @@ export default function DownloaderBox() {
     try {
       const res = await fetch("/api/download", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ url }),
       });
 
@@ -43,12 +45,7 @@ export default function DownloaderBox() {
   return (
     <div className="w-full max-w-2xl text-center">
 
-      {/* Input Box */}
-      <motion.div
-        initial={{ scale: 0.95, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        className="glass p-3 rounded-2xl flex gap-2"
-      >
+      <div className="flex gap-2 bg-white/10 p-3 rounded-xl">
         <Input
           value={url}
           onChange={(e) => setUrl(e.target.value)}
@@ -58,24 +55,22 @@ export default function DownloaderBox() {
         <Button onClick={handleDownload} disabled={loading}>
           {loading ? "..." : "Download"}
         </Button>
-      </motion.div>
+      </div>
 
-      {/* Loader */}
       {loading && <Loader />}
 
-      {/* Result */}
-      {data && !data.error && data.title && (
-  <ResultCard
-    title={data.title}
-    thumbnail={data.thumbnail}
-    download={data.download}
-  />
-)}
+      {/* ✅ SAFE RENDER */}
+      {data && !data.error && data.title && data.thumbnail && data.download && (
+        <ResultCard
+          title={data.title}
+          thumbnail={data.thumbnail}
+          download={data.download}
+        />
+      )}
 
-{data?.error && (
-  <p className="text-red-400 mt-4">{data.error}</p>
-)}
-
+      {data?.error && (
+        <p className="text-red-400 mt-4">{data.error}</p>
+      )}
     </div>
   );
 }
