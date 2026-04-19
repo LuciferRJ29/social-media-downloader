@@ -2,9 +2,9 @@ const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 export type DownloadResponse = {
-  title: string;
-  thumbnail: string;
-  download: string;
+  title?: string;
+  thumbnail?: string;
+  download?: string;
   error?: string;
 };
 
@@ -20,11 +20,24 @@ export async function fetchDownload(
       body: JSON.stringify({ url }),
     });
 
+    // ✅ handle non-200 responses safely
     if (!res.ok) {
-      throw new Error("Failed request");
+      return { error: "Request failed" };
     }
 
-    return await res.json();
+    const data = await res.json();
+
+    // ✅ ensure safe structure
+    if (!data || data.error) {
+      return { error: data?.error || "Invalid response" };
+    }
+
+    return {
+      title: data.title,
+      thumbnail: data.thumbnail,
+      download: data.download,
+    };
+
   } catch (err) {
     return { error: "Failed to fetch data" };
   }
